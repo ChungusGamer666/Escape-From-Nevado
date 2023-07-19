@@ -8,7 +8,7 @@
 	show_when_dead = TRUE
 	alpha = 0
 	/// How many jumpscare sprites we have
-	var/jumpscare_amount = 20
+	var/jumpscare_amount = 21
 	/// Jumpscare sounds we have
 	var/list/jumpscare_sounds = list(
 		'modular_septic/sound/insanity/poopmadness/atumalaka.ogg',
@@ -26,6 +26,7 @@
 		'modular_septic/sound/insanity/poopmadness/secretside.ogg',
 		'modular_septic/sound/insanity/poopmadness/tlad.ogg',
 		'modular_septic/sound/insanity/poopmadness/cantbreathe.ogg',
+		'modular_septic/sound/insanity/poopmadness/slopper.ogg',
 	)
 
 /atom/movable/screen/fullscreen/jumpscare/proc/flash_scare(mob/user, scare_sound = pick(jumpscare_sounds))
