@@ -33,7 +33,7 @@
 	icon_state = "[base_icon_state][rand(1, jumpscare_amount)]"
 	alpha = 255
 	add_filter("blur", 1, gauss_blur_filter(3))
-	transition_filter("blur", 0.3 SECONDS, gauss_blur_filter(0))
+	transition_filter("blur", 0.6 SECONDS, gauss_blur_filter(0))
 	animate(src, alpha = 0, time = 1 SECONDS, easing = EASE_IN|BOUNCE_EASING)
 	if(scare_sound)
 		user.playsound_local(scare_sound, scare_sound, vol = 200, vary = FALSE)
