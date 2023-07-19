@@ -27,7 +27,7 @@
 	max_integrity = 200
 	integrity_failure = 0.1
 	limb_integrity = 190
-	repairable_by = /obj/item/stack/ballistic
+	repairable_by = /obj/item/stack/kevlar
 	armor = list(MELEE = 0, \
 				BULLET = 0, \
 				LASER = 0, \
@@ -74,7 +74,7 @@
 	max_integrity = 300
 	integrity_failure = 0.05
 	limb_integrity = 220
-	repairable_by = /obj/item/stack/ballistic
+	repairable_by = /obj/item/stack/kevlar
 	armor = list(MELEE = 0, \
 				BULLET = 0, \
 				LASER = 0, \
@@ -114,7 +114,7 @@
 	max_integrity = 400
 	integrity_failure = 0.04
 	limb_integrity = 350
-	repairable_by = /obj/item/stack/ballistic/plate
+	repairable_by = /obj/item/stack/kevlar/plate
 	subarmor = list(SUBARMOR_FLAGS = NONE, \
 				EDGE_PROTECTION = 75, \
 				CRUSHING = 28, \
@@ -146,7 +146,7 @@
 	max_integrity = 500
 	integrity_failure = 0.04
 	limb_integrity = 450
-	repairable_by = /obj/item/stack/ballistic/plate
+	repairable_by = /obj/item/stack/kevlar/plate
 	subarmor = list(SUBARMOR_FLAGS = NONE, \
 				EDGE_PROTECTION = 80, \
 				CRUSHING = 28, \

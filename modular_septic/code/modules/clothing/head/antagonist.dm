@@ -10,7 +10,7 @@
 	worn_icon_state = "deno"
 	max_integrity = 200
 	limb_integrity = 190
-	repairable_by = /obj/item/stack/ballistic/plate
+	repairable_by = /obj/item/stack/kevlar/plate
 	repairable_by_offhand = null
 	integrity_failure = 0.1
 	subarmor = list(SUBARMOR_FLAGS = NONE, \

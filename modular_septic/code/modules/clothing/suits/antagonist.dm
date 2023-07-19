@@ -12,7 +12,7 @@
 	max_integrity = 600
 	integrity_failure = 0.05
 	limb_integrity = 500
-	repairable_by = /obj/item/stack/ballistic
+	repairable_by = /obj/item/stack/kevlar
 	subarmor = list(SUBARMOR_FLAGS = NONE, \
                 EDGE_PROTECTION = 75, \
                 CRUSHING = 30, \

@@ -17,7 +17,7 @@
 	max_integrity = 500
 	integrity_failure = 0.05
 	limb_integrity = 420
-	repairable_by = /obj/item/stack/ballistic/plate
+	repairable_by = /obj/item/stack/kevlar/plate
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|NECK|VITALS
 	subarmor = list(SUBARMOR_FLAGS = NONE, \
                 EDGE_PROTECTION = 75, \
@@ -54,7 +54,7 @@
 	integrity_failure = 0.05
 	limb_integrity = 420
 	body_parts_covered = FACE|JAW|HEAD|EYES
-	repairable_by = /obj/item/stack/ballistic/plate
+	repairable_by = /obj/item/stack/kevlar/plate
 	subarmor = list(SUBARMOR_FLAGS = NONE, \
                 EDGE_PROTECTION = 75, \
                 CRUSHING = 28, \
