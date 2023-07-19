@@ -94,7 +94,7 @@
 	jumpscare.flash_scare(user, null)
 	var/obj/effect/decal/cleanable/bloody = target
 	var/obj/item/gun/ballistic/evil_gun = parent
-	if(evil_gun.magazine && bloody.bloodiness)
+	if(evil_gun.magazine)
 		var/amount_fed = 0
 		for(var/i in 1 to min(max(bloody.bloodiness, 3), evil_gun.magazine.max_ammo - evil_gun.magazine.ammo_count(countempties = FALSE)))
 			var/casing = new ammo_type
