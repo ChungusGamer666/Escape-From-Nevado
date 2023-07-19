@@ -159,7 +159,7 @@
 		madman.blood_volume += 3 * delta_time
 	madman.heal_bodypart_damage(2 * delta_time, 2 * delta_time, 2 * delta_time)
 	madman.hallucination += 0.5 * delta_time
-	if(DT_PROB(1, delta_time))
+	if(DT_PROB(2, delta_time))
 		jumpscare.flash_scare(madman)
 
 /datum/component/poopmadness/proc/on_gun_fired(obj/item/gun/weapon, mob/living/user, atom/target, params, zone_override)
