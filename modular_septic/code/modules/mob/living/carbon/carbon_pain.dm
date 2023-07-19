@@ -491,7 +491,7 @@
 			playsound(src, final_sound, 80, FALSE)
 	if(!flash)
 		return
-	flash_pain_endorphine()
+	flash_pain_endorphine(100)
 
 //Hacker shit
 /mob/living/carbon/proc/neural_entanglement()

@@ -17,15 +17,19 @@
 
 /datum/reagent/drug/lean/on_mob_metabolize(mob/living/lean_monster, delta_time)
 	. = ..()
-	var/leanfeel = pick("Dope dick give your bitch withdrawals", "But envy may kill, still don't give a fuck how they feel", "Oh man, I been gettin' in my zone", "Invested in my fucking self I need a loan, I'm alone")
+	var/static/list/lean_quotes = list(
+		"Dope dick give your bitch withdrawals",
+		"But envy may kill, still don't give a fuck how they feel",
+		"Oh man, I been gettin' in my zone",
+		"Invested in my fucking self I need a loan, I'm alone",
+	)
 	if(DT_PROB(2.5, delta_time))
-		to_chat(lean_monster, span_horny("[leanfeel]"))
+		to_chat(lean_monster, span_horny(pick(lean_quotes)))
 	to_chat(lean_monster, span_horny(span_big("Lean... I LOVE LEAAAANNNNNNN!!!")))
 	ADD_TRAIT(lean_monster, TRAIT_LEAN, name)
 	lean_monster.attributes?.add_attribute_modifier(/datum/attribute_modifier/lean, TRUE)
 	to_chat(lean_monster, span_warning("I feel myself stronger, so nice!"))
 	SEND_SIGNAL(lean_monster, COMSIG_ADD_MOOD_EVENT, "forbidden_sizzup", /datum/mood_event/lean, lean_monster)
-	SSdroning.area_entered(get_area(lean_monster), lean_monster?.client)
 	lean_monster.playsound_local(lean_monster, 'modular_septic/sound/insanity/leanlaugh.wav', 50)
 
 	if(!lean_monster.hud_used)
@@ -37,44 +41,30 @@
 
 	var/atom/movable/screen/plane_master/rendering_plate/filter_plate = lean_monster.hud_used.plane_masters["[RENDER_PLANE_GAME]"]
 
-	var/list/col_filter_full = list(1,0,0,0, 0,1.00,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
-	var/list/col_filter_twothird = list(1,0,0,0, 0,0.68,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
-	var/list/col_filter_half = list(1,0,0,0, 0,0.42,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
-	var/list/col_filter_empty = list(1,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
+	var/static/list/col_filter_lean = list(1,0,0,0, 0,1.00,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
+	var/static/list/col_filter_empty = list(1,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
 
-	filter_plate.add_filter("lean_filter", 100, color_matrix_filter(col_filter_twothird, FILTER_COLOR_HCY))
+	filter_plate.add_filter("lean_filter", 100, color_matrix_filter(col_filter_lean))
 
-	animate(filter_plate.get_filter("lean_filter"), loop = -1, color = col_filter_full, time = 4 SECONDS, easing = CIRCULAR_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
-	animate(color = col_filter_twothird, time = 6 SECONDS, easing = LINEAR_EASING)
-	animate(color = col_filter_half, time = 3 SECONDS, easing = LINEAR_EASING)
-	animate(color = col_filter_empty, time = 2 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
-	animate(color = col_filter_half, time = 24 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
-	animate(color = col_filter_twothird, time = 12 SECONDS, easing = LINEAR_EASING)
-
-	filter_plate.add_filter("lean_blur", 101, list("type" = "radial_blur", "size" = 0))
-
-	animate(filter_plate.get_filter("lean_blur"), loop = -1, size = 0.04, time = 2 SECONDS, easing = ELASTIC_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
-	animate(size = 0, time = 6 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
+	animate(filter_plate.get_filter("lean_filter"), loop = -1, color = col_filter_lean, time = 4 SECONDS, easing = CIRCULAR_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+	animate(color = col_filter_empty, time = 3 SECONDS, easing = LINEAR_EASING)
 
 /datum/reagent/drug/lean/on_mob_end_metabolize(mob/living/lean_monster)
 	. = ..()
 	to_chat(lean_monster, span_love(span_big("NOOOO... I NEED MORE LEAN...")))
 	lean_monster.attributes?.remove_attribute_modifier(/datum/attribute_modifier/lean, TRUE)
-	to_chat(lean_monster, span_warning("I feel myself weaker, so bad!"))
 	if(!lean_monster.hud_used)
 		return
 
 	var/atom/movable/screen/plane_master/rendering_plate/filter_plate = lean_monster.hud_used.plane_masters["[RENDER_PLANE_GAME]"]
 	lean_monster.playsound_local(lean_monster, 'modular_septic/sound/insanity/leanend.wav', 50)
-	lean_monster.flash_pain(30)
+	lean_monster.flash_pain_mental(30)
 
 	filter_plate.remove_filter("lean_filter")
-	filter_plate.remove_filter("lean_blur")
 	REMOVE_TRAIT(lean_monster, TRAIT_LEAN, name)
-	SSdroning.play_area_sound(get_area(lean_monster), lean_monster?.client)
 
 /datum/reagent/drug/lean/proc/handle_lean_monster_hallucinations(mob/living/lean_monster)
-	if(!lean_monster)
+	if(QDELETED(lean_monster))
 		return
 	var/purple_msg = pick("SAVE THEM!", "IT'S ME!", "I AM STILL HERE!", "I ALWAYS COME BACK!")
 	var/turf/turfie
@@ -133,14 +123,17 @@
 	crack_addict.attributes?.add_attribute_modifier(/datum/attribute_modifier/crack_addict, TRUE)
 	crack_addict.playsound_local(crack_addict, 'modular_septic/sound/insanity/bass.wav', 100)
 	to_chat(crack_addict, span_achievementrare("My brain swells and my muscles become faster."))
-	crack_addict.flash_pain_manic(100)
-	var/client/C = crack_addict.client
-	var/intensity = 12
-	animate(C, pixel_y = (C.pixel_y + intensity), time = intensity/2)
-	sleep(intensity/4)
-	animate(C, pixel_y = (C.pixel_y - intensity), time = intensity/2)
-	sleep(intensity/4)
+	crack_addict.flash_pain_endorphine()
+	INVOKE_ASYNC(src, .proc/cool_animation, crack_addict)
 
 /datum/reagent/drug/carbonylmethamphetamine/on_mob_end_metabolize(mob/living/crack_addict)
 	. = ..()
 	crack_addict.attributes?.remove_attribute_modifier(/datum/attribute_modifier/crack_addict, TRUE)
+
+/datum/reagent/drug/carbonylmethamphetamine/proc/cool_animation(mob/living/crack_addict)
+	if(!crack_addict.client)
+		return
+	animate(crack_addict.client, pixel_y = (crack_addict.client.pixel_y + 4), time = 2)
+	sleep(4)
+	animate(crack_addict.client, pixel_y = (crack_addict.client.pixel_y - 4), time = 2)
+	sleep(4)

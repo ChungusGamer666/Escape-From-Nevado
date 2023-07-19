@@ -1,26 +1,28 @@
 //Atropine changes
 /datum/reagent/medicine/atropine
+	overdose_threshold = OVERDOSE_STANDARD * 1.2
 
 /datum/reagent/medicine/atropine/on_mob_metabolize(mob/living/L)
 	. = ..()
 	if(!iscarbon(L))
 		return
 	var/mob/living/carbon/C = L
-	var/numbing = min(50, CEILING(C.getShock(TRUE)/2, 1))
-	C.add_chem_effect(CE_BLOOD_REGEN, 1, "[type]")
-	C.add_chem_effect(CE_PAINKILLER, numbing, "[type]")
 	C.add_chem_effect(CE_STABLE, 1, "[type]")
+	C.add_chem_effect(CE_BLOOD_REGEN, 1, "[type]")
+	C.add_chem_effect(CE_PAINKILLER, min(50, CEILING(C.getShock(TRUE)/2, 1)), "[type]")
 	if(C.undergoing_cardiac_arrest() || C.undergoing_nervous_system_failure())
 		C.add_chem_effect(CE_ORGAN_REGEN, 1, "[type]")
+		C.add_chem_effect(CE_BRAIN_REGEN, 1, "[type]")
 
 /datum/reagent/medicine/atropine/on_mob_end_metabolize(mob/living/L)
 	. = ..()
+	L.remove_chem_effect(CE_STABLE, "[type]")
 	L.remove_chem_effect(CE_BLOOD_REGEN, "[type]")
 	L.remove_chem_effect(CE_ORGAN_REGEN, "[type] ")
+	L.remove_chem_effect(CE_BRAIN_REGEN, "[type] ")
 	L.remove_chem_effect(CE_PAINKILLER, "[type]")
-	L.remove_chem_effect(CE_TOXIN, "[type]")
 	L.remove_chem_effect(CE_BLOCKAGE, "[type]")
-	L.remove_chem_effect(CE_STABLE, "[type]")
+	L.remove_chem_effect(CE_TOXIN, "[type]")
 
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = ..()
@@ -29,8 +31,9 @@
 /datum/reagent/medicine/atropine/overdose_start(mob/living/M)
 	. = ..()
 	M.remove_chem_effect(CE_STABLE, "[type]")
-	M.add_chem_effect(CE_TOXIN, 2, "[type]")
+	M.remove_chem_effect(CE_BLOOD_REGEN, "[type]")
 	M.add_chem_effect(CE_BLOCKAGE, 20, "[type]")
+	M.add_chem_effect(CE_TOXIN, 2, "[type]")
 
 /datum/reagent/medicine/atropine/overdose_process(mob/living/M, delta_time, times_fired)
 	. = ..()

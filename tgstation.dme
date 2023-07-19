@@ -4794,6 +4794,7 @@
 #include "modular_septic\code\modules\clothing\head\antagonist.dm"
 #include "modular_septic\code\modules\clothing\head\captain.dm"
 #include "modular_septic\code\modules\clothing\head\cargo.dm"
+#include "modular_septic\code\modules\clothing\head\emoney.dm"
 #include "modular_septic\code\modules\clothing\head\hardhat.dm"
 #include "modular_septic\code\modules\clothing\head\helmet.dm"
 #include "modular_septic\code\modules\clothing\head\itobe.dm"

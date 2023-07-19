@@ -815,10 +815,8 @@
 	var/toxins = 0
 	if(owner)
 		toxins = owner.get_chem_effect(CE_TOXIN)
-		//the dylovenal is mightier than the cyanide
-		if(owner?.get_chem_effect(CE_ANTITOX) >= 10)
-			toxins = 0
-		//broken heart
+		toxins = max(toxins - owner.get_chem_effect(CE_ANTITOX), 0) //the dylovenal is mightier than the cyanide
+		//broken heart counts as a toxin i guess
 		if(owner?.getorganslotefficiency(ORGAN_SLOT_HEART) < ORGAN_FAILING_EFFICIENCY)
 			toxins = max(toxins, 1)
 	for(var/datum/injury/injury as anything in injuries)
