@@ -130,7 +130,7 @@
 	list_reagents = list(/datum/reagent/medicine/c2/tirimol = 15)
 
 /obj/item/reagent_containers/syringe/antiviral
-	name = "penicillin syringe"
+	name = "syringe (penicillin)"
 	desc = "Contains a common antibiotic, penicillin."
 	list_reagents = list(/datum/reagent/medicine/spaceacillin = 15)
 

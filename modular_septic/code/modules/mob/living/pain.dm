@@ -56,7 +56,7 @@
 		if(75 to INFINITY)
 			flick("pain", hud_used.pain_flash)
 
-/mob/proc/flash_pain_endorphine()
+/mob/proc/flash_pain_endorphine(power)
 	if(!hud_used?.pain_flash)
 		return
 	flick("endorphin_junkie", hud_used.pain_flash)
@@ -64,30 +64,17 @@
 /mob/proc/flash_pain_mental(power)
 	if(!hud_used?.pain_flash)
 		return
-	switch(power)
-		if(5 to INFINITY)
-			flick("static", hud_used.pain_flash)
+	flick("static", hud_used.pain_flash)
 
 /mob/proc/flash_screen_flash(power)
 	if(!hud_used?.pain_flash)
 		return
-	switch(power)
-		if(5 to INFINITY)
-			flick("flash_anim", hud_used.pain_flash)
+	flick("flash_anim", hud_used.pain_flash)
 
 /mob/proc/flash_darkness(power)
 	if(!hud_used?.pain_flash)
 		return
-	switch(power)
-		if(5 to INFINITY)
-			flick("darkness", hud_used.pain_flash)
-
-/mob/proc/flash_pain_manic(power)
-	if(!hud_used?.pain_flash)
-		return
-	switch(power)
-		if(5 to INFINITY)
-			flick("endorphin_junkie", hud_used.pain_flash)
+	flick("darkness", hud_used.pain_flash)
 
 /mob/living/proc/custom_pain(message, power, forced, obj/item/bodypart/affecting, nopainloss)
 	return

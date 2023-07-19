@@ -288,7 +288,7 @@
 	reagent_state = LIQUID
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolization_rate = REAGENTS_METABOLISM
-	overdose_threshold = 0
+	overdose_threshold = OVERDOSE_STANDARD * 1.2
 	failed_chem = null
 	inverse_chem = null
 	impure_chem = null
@@ -304,6 +304,7 @@
 	L.remove_chem_effect(CE_PULSE, "[type]")
 	L.remove_chem_effect(CE_BLOOD_REGEN, "[type]")
 	L.remove_chem_effect(CE_ORGAN_REGEN, "[type]")
+	L.remove_chem_effect(CE_TOXIN, "[type]")
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = ..()
@@ -315,6 +316,18 @@
 		var/obj/item/organ/organ = pick(damaged_organs)
 		organ.applyOrganDamage(-2 * 0.5 * delta_time)
 	return TRUE
+
+/datum/reagent/medicine/c2/penthrite/overdose_start(mob/living/M)
+	. = ..()
+	M.add_chem_effect(CE_TOXIN, 20, "[type]")
+
+/datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/M, delta_time, times_fired)
+	. = ..()
+	if(iscarbon(M))
+		var/mob/living/carbon/carbon_user = M
+		for(var/obj/item/organ/organ as anything in carbon_user.internal_organs)
+			if(organ.is_destroyed() && DT_PROB(5, delta_time))
+				organ.organ_flags &= ~ORGAN_DESTROYED
 
 /******RADIATION******/
 /*(Common) Suffix: none yet i guess*/
@@ -328,7 +341,7 @@
 	ph = 6.4
 	reagent_state = LIQUID
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	metabolization_rate = REAGENTS_METABOLISM*2
+	metabolization_rate = REAGENTS_METABOLISM * 2
 	overdose_threshold = 0
 	failed_chem = null
 	inverse_chem = null
@@ -339,3 +352,4 @@
 	var/datum/component/irradiated/hisashi_ouchi = M.GetComponent(/datum/component/irradiated)
 	if(hisashi_ouchi)
 		hisashi_ouchi.rads = clamp(CEILING(hisashi_ouchi.rads - (RADIATION_CLEANING_POWER/20)*delta_time, 1), 0, RADIATION_MAXIMUM_RADS)
+	return TRUE

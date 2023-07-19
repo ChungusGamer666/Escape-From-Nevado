@@ -1,36 +1,6 @@
 /obj/machinery/vending/tiktok
 	name = "godforsaken machine"
-	desc = "A meta-physical line to a Devious, Godforsaken, and Diabolical Corporation. \n\
-	<div class='infobox'> \
-	Input: 1 cable coil + 1 can of beans - Output = PPK \n\
-	Input: 2 cans of beef stew - Output = Bolsa SMG \n\
-	Input: 2 PPK Handguns - Output = Th(ump) SMG \n\
-	Input: 3 individual batteries - Output = Inverno Genocidio Rifle \n\
-	Input: 1 Chunky Battery - Output = Federson bolt-action \n\
-	Input: 1 Toobrush - Output = Combat Shotgun \n\
-	Input: 1 Head - Output = Frag Master 9mm \n\
-	Input 1 Stomach - Output = Touro-5 Faceshield \n\
-	Input: 1 (any) computer circuit - Output = Black Pump-action Shotgun \n\
-	Input: 8 Carbonylmethamphetamine pills - Output = Abyss Rifle \n\
-	Input: 4 HE Shells - Output = Batata grenade launcher \n\
-	Input: 1 (any) bottle - Output = Solitario-SD \n\
-	Input: 1 Soap Dispenser - Output = Lampiao (SVD) DMR \n\
-	Input: 1 Sounding Rod - Output = Bolt ACR \n\
-	Input 2 (any) hearts - Output = Industrial Glue Gun \n\
-	Input 1 (any) intestines - Output = Bolas 4 Guage Shotgun \n\
-	Input 2 (any) kidneys - Output = Aniquilador LE living pistol \n\
-	Input: 1 CCP booklet - Output = Heavy Helmet \n\
-	Input: 1 Broken LCD - Output = Heavy Vest \n\
-	Input: 3 Left legs, 3 Right legs - Output = UltraHeavy Vest \n\
-	Input: 1 Crowbar - Output = 1 Slaughter Goggles \n\
-	Input: 3 Light Bulbs - Output = 1 Satchel \n\
-	Input: 1 Black Gloves - Output = 1 Suppressor \n\
-	Input: 1 Chair - Output = 1 Military Rig (belt) \n\
-	Input: 1 Syringe + 2 Individual Batteries - Output = Energy Sword \n\
-	Input: 1 Left Arm + 1 Right Arm - Output = Kukri \n\
-	Input: 1 Wooden Chair - Output = 1 Oxygen Tank \n\
-	Input: 4 Glass Shards - Output = 1 Carbonylmethamphetamine \
-    </div>"
+	desc = "A meta-physical line to a Devious, Godforsaken, and Diabolical Corporation."
 	density = FALSE
 	onstation = FALSE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
@@ -46,13 +16,34 @@
 		/obj/item/clothing/gloves/color/black = 40,
 		/obj/item/clothing/suit/armor/vest/alt/discrete = 40,
 		/obj/item/clothing/mask/breath/medical/n95 = 40,
-		/obj/item/wrench = 45,
+		/obj/item/wrench = 40,
 	)
 	var/list/tiktoklines = list('modular_septic/sound/effects/singer1.wav', 'modular_septic/sound/effects/singer2.wav')
 	var/refuse_sound_cooldown_duration = 1 SECONDS
 	var/barfsound = 'modular_septic/sound/emotes/vomit.wav'
 	var/crushersound = list('modular_septic/sound/effects/crusher1.wav', 'modular_septic/sound/effects/crusher2.wav', 'modular_septic/sound/effects/crusher3.wav')
 	COOLDOWN_DECLARE(refuse_cooldown)
+
+/obj/machinery/vending/tiktok/examine_more(mob/user)
+	. = list(span_notice("<center><b>THE PLATTER:</b></center>"), "<br><hr class='infohr'>")
+	var/infobox = "<div class='infobox'>"
+	var/barter_strings = list()
+	var/datum/bartering_recipe/bartering_recipe
+	for(var/recipe_type as anything in GLOB.bartering_recipes)
+		bartering_recipe = GLOB.bartering_recipes[recipe_type]
+		var/list/input_strings = list()
+		for(var/input in bartering_recipe.inputs)
+			var/atom/totally_real_atom = input
+			input_strings += "[bartering_recipe.inputs[input]] [initial(totally_real_atom.name)]"
+		var/input_text = "Input: [jointext(input_strings, " + ")]"
+		var/list/output_strings = list()
+		for(var/output in bartering_recipe.inputs)
+			var/atom/totally_real_atom = output
+			output_strings += "[bartering_recipe.outputs[output]] [initial(totally_real_atom.name)]"
+		var/output_text = "Output: [jointext(output_strings, " + ")]"
+		barter_strings += "[input_text] - [output_text]"
+	infobox += jointext(barter_strings, "\n")
+	infobox += "</div>"
 
 /obj/machinery/vending/tiktok/attackby(obj/item/I, mob/living/user, params)
 	var/list/modifiers = params2list(params)
